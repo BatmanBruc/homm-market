@@ -6,7 +6,7 @@ export default class UnitEntity {
   names_hash_table = new Map();
   search_hash_table = new Map();
   in_stock_table = new Map();
-  positionMap = new Map();
+  position_map = new Map();
 
   constructor(length = 1000000) {
     this._createTable(length);
@@ -26,6 +26,7 @@ export default class UnitEntity {
   _createTable(length) {
     for (let i = 0; i < length; i++) {
       this.sort_indexes_table.push(i);
+      this.position_map.set(i, i);
       const [rank, name, count] = this._generateUnit();
       this.origin_table.push({
         internal_id: i,
@@ -42,10 +43,10 @@ export default class UnitEntity {
       if (this.names_hash_table.has(this.origin_table[i]["name"])) {
         this.names_hash_table
           .get(this.origin_table[i]["name"])
-          .push(this.origin_table[i]);
+          .push(this.origin_table[i]["internal_id"]);
       } else {
         this.names_hash_table.set(this.origin_table[i]["name"], [
-          this.origin_table[i],
+          this.origin_table[i]["internal_id"],
         ]);
       }
     }
@@ -54,7 +55,7 @@ export default class UnitEntity {
   _merge(u) {
     return {
       ...u,
-      inStock: this.in_stock_table[u["id"]],
+      inStock: this.in_stock_table[u["internal_id"]] || false,
     };
   }
 
@@ -62,32 +63,25 @@ export default class UnitEntity {
     return this.origin_table.filter((item) => item[field] === value);
   }
 
-  _updatePositionMap() {
-    this.positionMap.clear();
-    this.sort_indexes_table.forEach((internal_id, sortedPos) => {
-      this.positionMap.set(internal_id, sortedPos);
-    });
-  }
-
   list(offset = 0, search, limit = 20) {
     if (search) {
-      const names = this.names_hash_table
-        .keys()
-        .filter((key) => key.includes(search));
-      
-      const indexes = this.search_hash_table[search] || [];
+      const names = [];
+      for (const name of this.names_hash_table.keys()) {
+        name.includes(search) && names.push(name);
+      }
+      let indexes = this.search_hash_table[search] || [];
       if (!indexes.length) {
         for (let i = 0; i < names.length; i++) {
           indexes = [...indexes, ...this.names_hash_table.get(names[i])];
         }
         this.search_hash_table[search] = indexes;
       }
-
       return indexes
         .slice(offset, offset + limit)
         .sort((a, b) => {
-          return positionMap.get(a) - positionMap.get(b);
-        });
+          return this.position_map.get(a) - this.position_map.get(b);
+        })
+        .map((i) => this._merge(this.origin_table[i]));
     } else {
       return this.sort_indexes_table
         .slice(offset, offset + limit)
@@ -96,7 +90,9 @@ export default class UnitEntity {
   }
 
   get(id) {
-    return this.origin_table[this.sort_indexes_table[this.positionMap.get(id)]];
+    return this._merge(
+      this.origin_table[this.sort_indexes_table[this.position_map.get(id)]]
+    );
   }
 
   moveIndex(fromIndex, toIndex) {
@@ -106,14 +102,15 @@ export default class UnitEntity {
 
     for (let i = fromIndex; i !== toIndex; i += direction) {
       this.sort_indexes_table[i] = this.sort_indexes_table[i + direction];
+      this.position_map.set(this.sort_indexes_table[i], i);
     }
 
     this.sort_indexes_table[toIndex] = item;
-    this._updatePositionMap();
+    this.position_map.set(this.sort_indexes_table[toIndex], toIndex);
   }
 
-  insert(id, field, value) {
-    if (field === 'inStock') {
+  update(id, field, value) {
+    if (field === "inStock") {
       this.in_stock_table[id] = value;
     }
   }

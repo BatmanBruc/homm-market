@@ -2,13 +2,14 @@ import UnitEntity from "../db/UnitEntity.js";
 
 const unit = new UnitEntity();
 
+unit.sort_indexes_table.slice(0, 20).map((i) => unit._merge(unit.origin_table[i]));
 (function() {
   console.time();
   let result;
   let msg;
   try {
     result = unit.list();
-    msg = 'Success execute next page list';
+    msg = 'Success execute list';
   } catch (error) {
     console.error(error);
   }
@@ -22,7 +23,7 @@ const unit = new UnitEntity();
   let msg;
   try {
     result = unit.list(20);
-    msg = 'Success execute next page getList';
+    msg = 'Success execute next page list';
   } catch (error) {
     console.error(error);
   }
@@ -35,7 +36,7 @@ const unit = new UnitEntity();
   let result;
   let msg;
   try {
-    unit.list(20, 'Ске');
+    result = unit.list(0, 'а');
     msg = 'Success execute next page with search getList';
   } catch (error) {
     console.error(error);
@@ -64,8 +65,8 @@ const unit = new UnitEntity();
   let result;
   let msg;
   try {
-    unit.insert(unit.origin_table[0]['id'], 'inStock', true);
-    msg = 'Success execute set';
+    unit.update(unit.origin_table[0]['internal_id'], 'inStock', true);
+    msg = 'Success execute update in stock';
   } catch (error) {
     console.error(error);
   }
