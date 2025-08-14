@@ -65,8 +65,7 @@ function getUnits() {
 getUnits();
 
 const search = () => {
-  if (page.value === 1)
-    loading.value = true;
+  loading.value = true;
   page.value = 1;
   getListUnit(page.value, search_string.value)
     .then((res) => {
