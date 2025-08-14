@@ -75,12 +75,12 @@ export default class UnitEntity implements Entity<TUnit> {
 
   list(offset: number, search: string, limit = 20) {
     if (search) {
-      let indexes = this.search_hash_table.get(search) || [];
+      let indexes = [];
       for (const id of this.position_map.keys()) {
         String(id).includes(search) && indexes.push(this.position_map.get(id)!);
       }
       
-      this.search_hash_table.set(search, indexes);
+      //this.search_hash_table.set(search, indexes);
       return indexes
         .slice(offset, offset + limit)
         .sort((a: number, b: number) => {
