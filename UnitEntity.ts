@@ -15,6 +15,7 @@ export default class UnitEntity implements Entity<TUnit> {
   private search_hash_table: Map<string, number[]> = new Map();
   private in_stock_table: Map<number, boolean> = new Map();
   private position_map: Map<number, number> = new Map();
+  private id_hash_table: Map<number, number> = new Map()
 
   constructor(length: number = 1000000) {
     this.createTable(length);
@@ -32,6 +33,7 @@ export default class UnitEntity implements Entity<TUnit> {
     this.origin_table = [];
     this.sort_indexes_table = [];
     this.names_hash_table = new Map();
+    this.id_hash_table = new Map();
     this.search_hash_table = new Map();
     this.in_stock_table = new Map();
     this.position_map = new Map();
@@ -73,17 +75,12 @@ export default class UnitEntity implements Entity<TUnit> {
 
   list(offset: number, search: string, limit = 20) {
     if (search) {
-      const names: string[] = [];
-      for (const name of this.names_hash_table.keys()) {
-        name.toLowerCase().includes(search.toLowerCase()) && names.push(name);
-      }
       let indexes = this.search_hash_table.get(search) || [];
-      if (!indexes.length) {
-        for (let i = 0; i < names.length; i++) {
-          indexes = [...indexes, ...this.names_hash_table.get(names[i])!];
-        }
-        this.search_hash_table.set(search, indexes);
+      for (const id of this.position_map.keys()) {
+        String(id).includes(search) && indexes.push(this.position_map.get(id)!);
       }
+      
+      this.search_hash_table.set(search, indexes);
       return indexes
         .slice(offset, offset + limit)
         .sort((a: number, b: number) => {
