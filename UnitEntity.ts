@@ -40,6 +40,7 @@ export default class UnitEntity implements Entity<TUnit> {
     for (let i = 0; i < length; i++) {
       this.sort_indexes_table.push(i);
       this.position_map.set(i, i);
+      this.id_hash_table.set(i, i)
       const [rank, name, count] = this.generateUnit();
       this.origin_table.push({
         id: i,
@@ -76,8 +77,8 @@ export default class UnitEntity implements Entity<TUnit> {
   list(offset: number, search: string, limit = 20) {
     if (search) {
       let indexes = [];
-      for (const id of this.position_map.keys()) {
-        String(id).includes(search) && indexes.push(this.position_map.get(id)!);
+      for (const id of this.id_hash_table.keys()) {
+        String(id).includes(search) && indexes.push(this.id_hash_table.get(id)!);
       }
       
       //this.search_hash_table.set(search, indexes);
