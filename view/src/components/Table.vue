@@ -81,10 +81,14 @@ const search = () => {
 };
 
 function generate() {
+  loading.value = true;
   list.value = [];
   page.value = 1;
   search_string.value = "";
-  generateData(count.value).finally(getUnits);
+  generateData(count.value).finally(() => {
+    loading.value = false;
+    getUnits();
+  });
 }
 
 function move(e) {
