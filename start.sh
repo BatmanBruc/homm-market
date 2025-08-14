@@ -4,4 +4,4 @@ npm run build
 cd ../
 npm i
 npx tsc
-node dist/index.js
+pm2 start dist/index.js
