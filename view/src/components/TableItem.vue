@@ -32,6 +32,8 @@ const trade = debounce((id, trade) => {
 <style scoped>
 .line {
   display: flex;
+  margin-bottom: 15px;
+  cursor: move;
 }
 
 .line > div {
@@ -43,7 +45,6 @@ const trade = debounce((id, trade) => {
   background: url(/src/assets/Leather-dark.png);
   height: 30px;
   line-height: 30px;
-  margin-bottom: 15px;
 }
 
 .line > div:nth-child(1) {
