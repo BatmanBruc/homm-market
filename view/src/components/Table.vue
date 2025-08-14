@@ -143,6 +143,7 @@ onMounted(() => {
   margin-bottom: 30px;
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 input {
   width: 300px;
