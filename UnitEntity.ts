@@ -14,7 +14,8 @@ export default class UnitEntity implements Entity<TUnit> {
   private names_hash_table: Map<string, number[]> = new Map();
   private in_stock_table: Map<number, boolean> = new Map();
   private position_map: Map<number, number> = new Map();
-  private id_hash_table: Map<number, number> = new Map()
+  private id_hash_table: Map<number, number> = new Map();
+  private propertys_entity = ['id', 'name', 'price', 'count'];
 
   constructor(length: number = 1000000) {
     this.createTable(length);
@@ -113,6 +114,13 @@ export default class UnitEntity implements Entity<TUnit> {
   update(id: number, field: string, value: any) {
     if (field === "inStock") {
       this.in_stock_table.set(id, value);
+    } else if (this.propertys_entity.includes(field)) {
+      if (this.id_hash_table.get(id)) {
+        const elem = this.origin_table[this.id_hash_table.get(id)!];
+        //@ts-ignore
+        elem[field] = value
+      }
     }
+    const obj = 
   }
 }
