@@ -56,5 +56,5 @@ app.get("/", (__req, res) => {
   res.sendFile(path.join(__dirname, "view/dist/index.html"));
 });
 
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
