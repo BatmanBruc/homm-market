@@ -48,7 +48,8 @@ watch(count, () => {
   count.value > 1000000 && (count.value = 1000000);
 });
 function getUnits() {
-  loading.value = true;
+  if (page.value === 1)
+    loading.value = true;
   getListUnit(page.value, search_string.value)
     .then((res) => {
       res.json().then((data) => {
@@ -64,7 +65,8 @@ function getUnits() {
 getUnits();
 
 const search = () => {
-  loading.value = true;
+  if (page.value === 1)
+    loading.value = true;
   page.value = 1;
   getListUnit(page.value, search_string.value)
     .then((res) => {
