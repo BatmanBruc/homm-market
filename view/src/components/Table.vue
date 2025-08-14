@@ -37,7 +37,7 @@
 import { ref, onMounted, watch } from "vue";
 import { getListUnit, moveUnit, generateData } from "../api";
 import { VueDraggableNext } from "vue-draggable-next";
-import TableItem from "./TableItem.vue";
+import TableItem from "@/components/TableItem.vue";
 
 const list = ref([]);
 const page = ref(1);

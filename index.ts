@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'view/dist')));
+app.use(express.static(path.join(__dirname, '../view/dist')));
 app.use(bodyParser.json());
 
 app.post("/api/unit/items", (req, res) => {
@@ -53,7 +53,7 @@ app.post("/api/unit/generate", (req, res) => {
 });
 
 app.get("/", (__req, res) => {
-  res.sendFile(path.join(__dirname, "view/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../view/dist/index.html"));
 });
 
 const PORT = 3000;

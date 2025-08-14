@@ -17,8 +17,8 @@
 </template>
 <script setup>
 import { defineProps } from 'vue';
-import { tradeUnit } from "../api";
-import debounce from "../helpers/debounce";
+import { tradeUnit } from "@/api";
+import debounce from "@/helpers/debounce";
 const { item } = defineProps({
   item: {
     type: Object,
