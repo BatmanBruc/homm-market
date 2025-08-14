@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "./dist",
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true
+  },
+  "exclude": ["view", "node_modules"]
+}

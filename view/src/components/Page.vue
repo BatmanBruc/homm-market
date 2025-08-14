@@ -1,14 +1,10 @@
 <template>
   <div class="page">
-    <table>
-
-    </table>
+    <Table />
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
-
-const count = ref(0)
+import Table from './Table.vue';
 </script>
 
 <style scoped>
@@ -18,6 +14,7 @@ const count = ref(0)
   padding: 32px 44px;
   height: 100%;
   box-sizing: border-box;
+  min-height: calc(100vh - 60px);
 }
 table {
   border-image: url(https://heroes.thelazy.net/images/9/9b/Border-small.png) 4 / 4px / 4px repeat;
