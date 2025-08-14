@@ -12,7 +12,6 @@ export default class UnitEntity implements Entity<TUnit> {
   private origin_table: TableUnit[] = [];
   private sort_indexes_table: number[] = [];
   private names_hash_table: Map<string, number[]> = new Map();
-  private search_hash_table: Map<string, number[]> = new Map();
   private in_stock_table: Map<number, boolean> = new Map();
   private position_map: Map<number, number> = new Map();
   private id_hash_table: Map<number, number> = new Map()
@@ -34,7 +33,6 @@ export default class UnitEntity implements Entity<TUnit> {
     this.sort_indexes_table = [];
     this.names_hash_table = new Map();
     this.id_hash_table = new Map();
-    this.search_hash_table = new Map();
     this.in_stock_table = new Map();
     this.position_map = new Map();
     for (let i = 0; i < length; i++) {
@@ -80,8 +78,6 @@ export default class UnitEntity implements Entity<TUnit> {
       for (const id of this.id_hash_table.keys()) {
         String(id).includes(search) && indexes.push(this.id_hash_table.get(id)!);
       }
-      
-      //this.search_hash_table.set(search, indexes);
       return indexes
         .slice(offset, offset + limit)
         .sort((a: number, b: number) => {
