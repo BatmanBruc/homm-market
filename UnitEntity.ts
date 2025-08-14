@@ -15,6 +15,7 @@ export default class UnitEntity implements Entity<TUnit> {
   private in_stock_table: Map<number, boolean> = new Map();
   private position_map: Map<number, number> = new Map();
   private id_hash_table: Map<number, number> = new Map();
+  private search_hash_table: Map<string, number[]> = new Map();
   private propertys_entity = ['id', 'name', 'price', 'count'];
 
   constructor(length: number = 1000000) {
@@ -79,6 +80,7 @@ export default class UnitEntity implements Entity<TUnit> {
       for (const id of this.id_hash_table.keys()) {
         String(id).includes(search) && indexes.push(this.id_hash_table.get(id)!);
       }
+      this.search_hash_table.set(search, indexes);
       return indexes
         .slice(offset, offset + limit)
         .sort((a: number, b: number) => {
@@ -118,9 +120,8 @@ export default class UnitEntity implements Entity<TUnit> {
       if (this.id_hash_table.get(id)) {
         const elem = this.origin_table[this.id_hash_table.get(id)!];
         //@ts-ignore
-        elem[field] = value
+        elem[field] = value;
       }
     }
-    const obj = 
   }
 }
