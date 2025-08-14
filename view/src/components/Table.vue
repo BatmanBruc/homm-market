@@ -95,9 +95,8 @@ function move(e) {
   let newIndex;
   if (e.moved.oldIndex < e.moved.newIndex) {
     newIndex = list.value[e.moved.newIndex - 1].sortIndex;
-    list.value[e.moved.newIndex + 1].sortIndex = newIndex - 1;
     if (search_string.value) {
-      list.value[e.moved.newIndex + 1].sortIndex = newIndex + 1;
+      list.value[e.moved.newIndex + 1].sortIndex = newIndex - 1;
     } else {
       for (let i = e.moved.oldIndex + 1; i < e.moved.newIndex - 1; i++) {
         list.value[i].sortIndex++;
