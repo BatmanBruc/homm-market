@@ -1,4 +1,4 @@
-import UnitEntity from "../db/UnitEntity.js";
+import UnitEntity from "/dist/UnitEntity.js";
 
 const unit = new UnitEntity();
 
