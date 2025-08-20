@@ -114,7 +114,6 @@ function move(e) {
     if (search_string.value) {
       for (let i = e.moved.newIndex - 1; e.moved.oldIndex - 1 !== i; i--) {
         list.value[i].sortIndex = list.value[i].sortIndex - 1;
-        console.log(list.value[i])
       }
     } else {
       for (let i = e.moved.oldIndex; i < e.moved.newIndex; i++) {
@@ -126,7 +125,6 @@ function move(e) {
     if (search_string.value) {
       for (let i = e.moved.newIndex + 1; e.moved.oldIndex + 1 !== i; i++) {
         list.value[i].sortIndex = list.value[i].sortIndex + 1;
-        console.log(list.value[i])
       }
     } else {
       for (let i = newIndex + 1; i <= e.moved.oldIndex; i++) {
