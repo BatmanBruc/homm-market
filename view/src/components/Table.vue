@@ -91,23 +91,45 @@ function generate() {
   });
 }
 
+function makeIterator(array) {
+  let nextIndex = 0
+
+  return {
+    next: function () {
+      if (nextIndex < array.length) {
+        const result = { value: array[nextIndex], done: false }
+        nextIndex++
+        return result
+      } else {
+        return { done: true }
+      }
+    }
+  }
+}
+
 function move(e) {
   let newIndex;
   if (e.moved.oldIndex < e.moved.newIndex) {
     newIndex = list.value[e.moved.newIndex - 1].sortIndex;
     if (search_string.value) {
-      list.value[e.moved.newIndex + 1].sortIndex = newIndex - 1;
+      for (let i = e.moved.newIndex - 1; e.moved.oldIndex - 1 !== i; i--) {
+        list.value[i].sortIndex = list.value[i].sortIndex - 1;
+        console.log(list.value[i])
+      }
     } else {
-      for (let i = e.moved.oldIndex + 1; i < e.moved.newIndex - 1; i++) {
-        list.value[i].sortIndex++;
+      for (let i = e.moved.oldIndex; i < e.moved.newIndex; i++) {
+        list.value[i].sortIndex--;
       }
     }
   } else {
     newIndex = list.value[e.moved.newIndex + 1].sortIndex;
     if (search_string.value) {
-      list.value[e.moved.newIndex + 1].sortIndex = newIndex + 1;
+      for (let i = e.moved.newIndex + 1; e.moved.oldIndex + 1 !== i; i++) {
+        list.value[i].sortIndex = list.value[i].sortIndex + 1;
+        console.log(list.value[i])
+      }
     } else {
-      for (let i = newIndex + 1; i < e.moved.oldIndex; i++) {
+      for (let i = newIndex + 1; i <= e.moved.oldIndex; i++) {
         list.value[i].sortIndex++;
       }
     }
