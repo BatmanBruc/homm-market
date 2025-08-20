@@ -112,8 +112,8 @@ function move(e) {
       }
     }
   }
-  console.log(list.value);
   moveUnit(e.moved.element.sortIndex, newIndex);
+  e.moved.element.sortIndex = newIndex;
 }
 
 const trigger = ref();
